@@ -1,18 +1,15 @@
+
 import nltk
-import fitz  
+import fitz
 import streamlit as st
 import faiss
 from sentence_transformers import SentenceTransformer
 from nltk.tokenize import sent_tokenize
-import os
-
-NLTK_DATA_DIR = "nltk_data"
-os.makedirs(NLTK_DATA_DIR, exist_ok=True)
-nltk.data.path.append(NLTK_DATA_DIR)
 
 @st.cache_resource
 def setup_nltk():
-    nltk.download("punkt", download_dir=NLTK_DATA_DIR)
+    nltk.download("punkt", download_dir="nltk_data")
+    nltk.data.path.append("nltk_data")
 setup_nltk()
 
 @st.cache_resource
@@ -28,7 +25,7 @@ def get_text():
             if file:
                 try:    
                     for page in fitz.open(stream=file.read(), filetype="pdf"):
-                        text += page.get_text()
+                        text += page.get_text()    
                 except Exception as e:
                     st.warning(f"Error reading PDF file: {e}")  
     return text if text.strip() else None
@@ -43,7 +40,8 @@ def get_chunks(text, chunk_size=8, overlap=2):
     return chunks
 
 def get_embeddings(chunks):
-    return model.encode(chunks)
+    chunk_embeddings = model.encode(chunks)
+    return chunk_embeddings
 
 def add_to_index(embeddings):
     embedding_dim = len(embeddings[0])
@@ -55,12 +53,16 @@ def add_to_index(embeddings):
 def get_query():
     query = st.text_input("Enter your query:")
     if query:
-        return model.encode([query])
-    return None
+        query_embedding = model.encode([query])
+        return query_embedding
+    return None   
 
 def search_index(query_embedding, index, chunks):
     dist, indices = index.search(query_embedding, k=3)
-    return [chunks[idx] for idx in indices[0]]
+    results = []
+    for idx in indices[0]:
+        results.append(chunks[idx])
+    return results
 
 def display_results(result):
     if result:
