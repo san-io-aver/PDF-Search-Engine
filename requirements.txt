@@ -1,4 +1,4 @@
-nltk
+nltk>=3.8.1
 streamlit>=1.25.0
 PyMuPDF>=1.22.0
 faiss-cpu>=1.7.4
