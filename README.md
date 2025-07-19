@@ -1,7 +1,8 @@
 # A PDF SEARCH ENGINE:
  A webapp that allows you to upload pdfs, and then ask queries similar to a search engine, and you get replies straight from the content uploaded    
  
- 🔗[**Try the App**](https://pdf-search-engine-san-io.streamlit.app)
+ 🔗[**Try the App**](https://pdf-search-engine-san-io.streamlit.app)  
+ 🔗[**Try the App (with proper sentence tokenisation)**](https://pdf-search-engine-jyufauwan9m8xmq5id9bnb.streamlit.app)
 ### How does it work?
 - Extracts text from PDF
 - Divides entire text to chunks of text
