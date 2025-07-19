@@ -10,14 +10,13 @@ import os
 
 @st.cache_resource
 def setup_nltk():
-    # Define a local path for NLTK data
+
     nltk_path = os.path.join(os.path.dirname(__file__), "nltk_data")
     if not os.path.exists(nltk_path):
         os.makedirs(nltk_path)
     
     nltk.data.path.append(nltk_path)
 
-    # Check if punkt is already downloaded, otherwise download
     try:
         nltk.data.find("tokenizers/punkt")
     except LookupError:
