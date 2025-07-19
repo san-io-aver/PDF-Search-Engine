@@ -8,8 +8,8 @@ from nltk.tokenize import sent_tokenize
 
 @st.cache_resource
 def setup_nltk():
-    nltk.download("punkt", download_dir="nltk_data")
     nltk.data.path.append("nltk_data")
+
 setup_nltk()
 
 @st.cache_resource
