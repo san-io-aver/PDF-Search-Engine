@@ -8,8 +8,7 @@ from sentence_transformers import SentenceTransformer
 @st.cache_resource
 def load_model():
     return SentenceTransformer('all-MiniLM-L6-v2')
-
-model = load_model()
+    
 def get_text():
     files = st.file_uploader("Upload a PDF file", type=["pdf"],accept_multiple_files=True)
     text=""
