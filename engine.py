@@ -5,10 +5,13 @@ import streamlit as st
 import faiss
 from sentence_transformers import SentenceTransformer
 from nltk.tokenize import sent_tokenize
+import os
 
 @st.cache_resource
 def setup_nltk():
-    nltk.data.path.append("nltk_data")
+    
+    nltk_path = os.path.join(os.path.dirname(__file__), "nltk_data")
+    nltk.data.path.append(nltk_path)
 
 setup_nltk()
 
