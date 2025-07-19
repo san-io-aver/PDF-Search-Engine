@@ -4,7 +4,8 @@ import fitz
 import streamlit as st
 import faiss
 from sentence_transformers import SentenceTransformer
-from nltk.tokenize import sent_tokenize
+import pickle
+from nltk.tokenize.punkt import PunktSentenceTokenizer
 import os
 
 @st.cache_resource
@@ -41,13 +42,17 @@ def get_text():
     return text if text.strip() else None
      
 def get_chunks(text, chunk_size=8, overlap=2):
-    sentences = sent_tokenize(text)
+    with open("nltk_data/tokenizers/punkt/english.pickle", "rb") as f:
+        tokenizer = pickle.load(f)
+    sentences = tokenizer.tokenize(text)
+
     chunks = []
     for i in range(0, len(sentences), chunk_size - overlap):
         chunk = " ".join(sentences[i:i + chunk_size]).strip()
         if len(chunk) > 0:
             chunks.append(chunk)
     return chunks
+
 
 def get_embeddings(chunks):
     chunk_embeddings = model.encode(chunks)
